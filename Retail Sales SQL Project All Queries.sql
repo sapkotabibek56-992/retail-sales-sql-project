@@ -102,7 +102,7 @@ WHERE price > 500;
 -- 6. Find employees in the Sales department.
 SELECT *
 FROM Employees
-WHERE department - 'Sales';
+WHERE department = 'Sales';
 
 -- 7. Show orders placed after January 1, 2024.
 SELECT *
@@ -117,7 +117,7 @@ WHERE age BETWEEN 25 AND 35;
 -- 9. Find products in the Electronics category.
 SELECT *
 FROM Products
-WHERE category - 'Electronics';
+WHERE category = 'Electronics';
 
 -- 10. Display the first 10 customers.
 SELECT *
@@ -233,19 +233,16 @@ select city , count(*)
 from customers
 group by city
 having count (*) > 100
+    
 -- PART 2 – SQL JOIN Practice (Questions 31–60)
 -- 31. Show customer name with each order.
-
-
-
-
 
 SELECT
     o.order_id,
     c.customer_name
 FROM Orders o
 INNER JOIN Customers c
-    ON o.customer_id - c.customer_id;
+    ON o.customer_id = c.customer_id;
 
 -- 32. Show product name with each order.
 SELECT
@@ -253,7 +250,7 @@ SELECT
     p.product_name
 FROM Orders o
 INNER JOIN Products p
-    ON o.product_id - p.product_id;
+    ON o.product_id = p.product_id;
 
 -- 33. Show employee handling each order.
 SELECT
@@ -261,7 +258,7 @@ SELECT
     e.employee_name
 FROM Orders o
 INNER JOIN Employees e
-    ON o.employee_id - e.employee_id;
+    ON o.employee_id = e.employee_id;
 
 -- 34. Show store for every order.
 SELECT
@@ -269,7 +266,7 @@ SELECT
     s.store_name
 FROM Orders o
 INNER JOIN Stores s
-    ON o.store_id - s.store_id;
+    ON o.store_id = s.store_id;
 
 -- 35. Show customer and purchased product.
 SELECT
@@ -277,9 +274,9 @@ SELECT
     p.product_name
 FROM Orders o
 JOIN Customers c
-    ON o.customer_id - c.customer_id
+    ON o.customer_id = c.customer_id
 JOIN Products p
-    ON o.product_id - p.product_id;
+    ON o.product_id = p.product_id;
 
 -- 36. Show customer, product and quantity.
 SELECT
@@ -288,9 +285,9 @@ SELECT
     o.quantity
 FROM Orders o
 JOIN Customers c
-    ON o.customer_id - c.customer_id
+    ON o.customer_id = c.customer_id
 JOIN Products p
-    ON o.product_id - p.product_id;
+    ON o.product_id = p.product_id;
 
 -- 37. Show customer, employee and store.
 SELECT
@@ -299,11 +296,11 @@ SELECT
     s.store_name
 FROM Orders o
 JOIN Customers c
-    ON o.customer_id - c.customer_id
+    ON o.customer_id = c.customer_id
 JOIN Employees e
-    ON o.employee_id - e.employee_id
+    ON o.employee_id = e.employee_id
 JOIN Stores s
-    ON o.store_id - s.store_id;
+    ON o.store_id = s.store_id;
 
 -- 38. Show complete order details.
 SELECT
@@ -316,13 +313,13 @@ SELECT
     o.quantity
 FROM Orders o
 JOIN Customers c
-    ON o.customer_id - c.customer_id
+    ON o.customer_id = c.customer_id
 JOIN Products p
-    ON o.product_id - p.product_id
+    ON o.product_id = p.product_id
 JOIN Employees e
-    ON o.employee_id - e.employee_id
+    ON o.employee_id = e.employee_id
 JOIN Stores s
-    ON o.store_id - s.store_id;
+    ON o.store_id = s.store_id;
 
 -- 39. Customers who never ordered.
 SELECT
@@ -330,7 +327,7 @@ SELECT
     c.customer_name
 FROM Customers c
 LEFT JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 WHERE o.order_id IS NULL;
 
 -- 40. Products never ordered.
@@ -339,7 +336,7 @@ SELECT
     p.product_name
 FROM Products p
 LEFT JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 WHERE o.order_id IS NULL;
 
 -- 41. Employees with no orders.
@@ -348,7 +345,7 @@ SELECT
     e.employee_name
 FROM Employees e
 LEFT JOIN Orders o
-    ON e.employee_id - o.employee_id
+    ON e.employee_id = o.employee_id
 WHERE o.order_id IS NULL;
 
 -- 42. Stores with no orders.
@@ -357,7 +354,7 @@ SELECT
     s.store_name
 FROM Stores s
 LEFT JOIN Orders o
-    ON s.store_id - o.store_id
+    ON s.store_id = o.store_id
 WHERE o.order_id IS NULL;
 
 -- 43. Count orders by customer.
@@ -366,7 +363,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Customers c
 LEFT JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY total_orders DESC;
 
@@ -376,7 +373,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Products p
 LEFT JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.product_name
 ORDER BY total_orders DESC;
 
@@ -386,7 +383,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Employees e
 LEFT JOIN Orders o
-    ON e.employee_id - o.employee_id
+    ON e.employee_id = o.employee_id
 GROUP BY e.employee_name
 ORDER BY total_orders DESC;
 
@@ -396,7 +393,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Stores s
 LEFT JOIN Orders o
-    ON s.store_id - o.store_id
+    ON s.store_id = o.store_id
 GROUP BY s.store_name
 ORDER BY total_orders DESC;
 
@@ -406,7 +403,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -417,7 +414,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Products p
 JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.product_name
 ORDER BY total_quantity DESC
 LIMIT 1;
@@ -428,7 +425,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Employees e
 JOIN Orders o
-    ON e.employee_id - o.employee_id
+    ON e.employee_id = o.employee_id
 GROUP BY e.employee_name
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -439,7 +436,7 @@ SELECT
     COUNT(o.order_id) AS total_orders
 FROM Stores s
 JOIN Orders o
-    ON s.store_id - o.store_id
+    ON s.store_id = o.store_id
 GROUP BY s.store_name
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -450,7 +447,7 @@ SELECT
     o.order_id
 FROM Customers c
 LEFT JOIN Orders o
-    ON c.customer_id - o.customer_id;
+    ON c.customer_id = o.customer_id;
 
 -- 52. Show all orders and customers (RIGHT JOIN).
 SELECT
@@ -458,7 +455,7 @@ SELECT
     o.order_id
 FROM Customers c
 RIGHT JOIN Orders o
-    ON c.customer_id - o.customer_id;
+    ON c.customer_id = o.customer_id;
 
 -- 53. Show all customers and orders (FULL OUTER JOIN).
 SELECT
@@ -466,7 +463,7 @@ SELECT
     o.order_id
 FROM Customers c
 FULL OUTER JOIN Orders o
-    ON c.customer_id - o.customer_id;
+    ON c.customer_id = o.customer_id;
 
 -- 54. Total quantity purchased by each customer.
 SELECT
@@ -474,7 +471,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY total_quantity DESC;
 
@@ -484,7 +481,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Products p
 JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.product_name
 ORDER BY total_quantity DESC;
 
@@ -494,7 +491,7 @@ SELECT
     AVG(o.quantity) AS average_quantity
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name;
 
 -- 57. Average quantity handled by each employee.
@@ -503,7 +500,7 @@ SELECT
     AVG(o.quantity) AS average_quantity
 FROM Employees e
 JOIN Orders o
-    ON e.employee_id - o.employee_id
+    ON e.employee_id = o.employee_id
 GROUP BY e.employee_name;
 
 -- 58. Average quantity sold by each store.
@@ -512,7 +509,7 @@ SELECT
     AVG(o.quantity) AS average_quantity
 FROM Stores s
 JOIN Orders o
-    ON s.store_id - o.store_id
+    ON s.store_id = o.store_id
 GROUP BY s.store_name;
 
 -- 59. Customers and the number of different products they purchased.
@@ -521,7 +518,7 @@ SELECT
     COUNT(DISTINCT o.product_id) AS different_products
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY different_products DESC;
 
@@ -537,13 +534,13 @@ SELECT
     (p.price * o.quantity) AS total_amount
 FROM Orders o
 JOIN Customers c
-    ON o.customer_id - c.customer_id
+    ON o.customer_id = c.customer_id
 JOIN Products p
-    ON o.product_id - p.product_id
+    ON o.product_id = p.product_id
 JOIN Employees e
-    ON o.employee_id - e.employee_id
+    ON o.employee_id = e.employee_id
 JOIN Stores s
-    ON o.store_id - s.store_id
+    ON o.store_id = s.store_id
 ORDER BY o.order_date;
 
 
@@ -572,7 +569,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY total_quantity DESC
 LIMIT 10;
@@ -583,7 +580,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Products p
 JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.product_name
 ORDER BY total_quantity DESC
 LIMIT 10;
@@ -594,7 +591,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Products p
 JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.category
 ORDER BY total_quantity DESC
 LIMIT 1;
@@ -605,7 +602,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.city
 ORDER BY total_quantity DESC;
 
@@ -617,7 +614,7 @@ FROM Orders
 GROUP BY month
 ORDER BY month;
 
--- 66. Daily order trend
+--- 66. Daily order trend
 SELECT
     order_date,
     COUNT(*) AS total_orders
@@ -648,7 +645,7 @@ SELECT
     SUM(o.quantity) AS total_quantity
 FROM Products p
 JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 GROUP BY p.category
 ORDER BY total_quantity DESC;
 
@@ -658,7 +655,7 @@ SELECT
     COUNT(*) AS total_orders
 FROM Employees e
 JOIN Orders o
-    ON e.employee_id - o.employee_id
+    ON e.employee_id = o.employee_id
 GROUP BY e.employee_name
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -669,7 +666,7 @@ SELECT
     COUNT(*) AS total_orders
 FROM Stores s
 JOIN Orders o
-    ON s.store_id - o.store_id
+    ON s.store_id = o.store_id
 GROUP BY s.store_name
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -680,7 +677,7 @@ SELECT
     COUNT(*) AS purchases
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.customer_name
 ORDER BY purchases DESC;
 
@@ -696,7 +693,7 @@ SELECT
     p.product_name
 FROM Products p
 LEFT JOIN Orders o
-    ON p.product_id - o.product_id
+    ON p.product_id = o.product_id
 WHERE o.order_id IS NULL;
 
 -- 76. Number of ordering customers by city
@@ -705,7 +702,7 @@ SELECT
     COUNT(DISTINCT c.customer_id) AS total_customers
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.city
 ORDER BY total_customers DESC;
 
@@ -715,7 +712,7 @@ SELECT
     COUNT(*) AS total_orders
 FROM Customers c
 JOIN Orders o
-    ON c.customer_id - o.customer_id
+    ON c.customer_id = o.customer_id
 GROUP BY c.city
 ORDER BY total_orders DESC
 LIMIT 1;
@@ -806,7 +803,7 @@ WHERE price >
 (
     SELECT AVG(price)
     FROM Products
-    WHERE category - p.category
+    WHERE category = p.category
 );
 
 -- 86. Customer Orders CTE
